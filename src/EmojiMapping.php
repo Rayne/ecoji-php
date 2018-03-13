@@ -20,12 +20,12 @@ use OutOfBoundsException;
 class EmojiMapping implements EmojiMappingInterface
 {
     /**
-     * @var string[]
+     * @var string[] `Map<ID, Emoji>`
      */
     private $emojis;
 
     /**
-     * @var string[]
+     * @var int[] `Map<Emoji, ID>`
      */
     private $revEmojis;
 
