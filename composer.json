@@ -1,0 +1,38 @@
+{
+  "name": "rayne/ecoji",
+  "description": "Encodes (and decodes) data as emojis. Implementation of the Encoji/Ecoji Standard.",
+  "keywords": [
+    "ecoji",
+    "emoji",
+    "encoding",
+    "encoji",
+    "decoding"
+  ],
+  "type": "library",
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.10",
+    "phpunit/phpunit": "^7.0"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Dennis Meckel"
+    }
+  ],
+  "require": {
+    "php": "^7.0",
+    "ext-mbstring" : "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Rayne\\Ecoji\\": [
+        "src",
+        "tests"
+      ]
+    }
+  },
+  "scripts": {
+    "format": "php-cs-fixer fix",
+    "test": "phpunit"
+  }
+}
