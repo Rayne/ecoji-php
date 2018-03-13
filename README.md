@@ -5,6 +5,11 @@ It's like `base1024` with an emoji character set.
 
 > [`rayne/ecoji`](https://packagist.org/packages/rayne/ecoji) is a PHP port of [Ecoji](https://github.com/keith-turner/ecoji) with 100% test coverage.
 
+[![Latest Stable Version](https://poser.pugx.org/rayne/ecoji/v/stable)](https://packagist.org/packages/rayne/ecoji)
+[![Code Coverage](https://scrutinizer-ci.com/g/rayne/ecoji-php/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/rayne/ecoji-php/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/rayne/ecoji-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/rayne/ecoji-php/?branch=master)
+[![License](https://poser.pugx.org/rayne/ecoji/license)](https://packagist.org/packages/rayne/ecoji)
+
 ## Installation
 
 ```bash
