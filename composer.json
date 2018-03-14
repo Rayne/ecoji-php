@@ -31,6 +31,9 @@
       ]
     }
   },
+  "bin": [
+    "bin/ecoji"
+  ],
   "scripts": {
     "format": "php-cs-fixer fix",
     "test": "phpunit"

@@ -12,10 +12,35 @@ namespace Rayne\Ecoji\Cli;
 use Exception;
 use Rayne\Ecoji\EcojiStream;
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
-
 define('Rayne\Ecoji\Cli\ACTION_DECODE', 'DECODE');
 define('Rayne\Ecoji\Cli\ACTION_ENCODE', 'ENCODE');
+
+/**
+ * Search autoloader or die.
+ */
+function autoload()
+{
+    $files = [
+        dirname(dirname(dirname(__DIR__))) . '/autoload.php',
+        dirname(__DIR__) . '/vendor/autoload.php',
+    ];
+
+    foreach ($files as $file) {
+        if (file_exists($file)) {
+            require_once $file;
+            return;
+        }
+    }
+
+    fwrite(STDERR, "Loader not found. Please install the package with Composer.\n\n");
+    fwrite(STDERR, "Checked these files:\n");
+
+    foreach ($files as $file) {
+        fwrite(STDERR, '  - ' . $file . "\n");
+    }
+
+    exit(1);
+}
 
 /**
  * Prints help message.
@@ -43,6 +68,8 @@ function command_version()
     $version = file_get_contents(dirname(__DIR__) . '/assets/version.txt');
     fwrite(STDOUT, "$version\n");
 }
+
+autoload();
 
 array_shift($argv);
 
@@ -124,7 +151,8 @@ try {
     if ($action == ACTION_ENCODE) {
         $ecoji->encode($stream, STDOUT);
         fwrite(STDOUT, "\n");
-    } elseif ($action == ACTION_DECODE) {
+    }
+    else if ($action == ACTION_DECODE) {
         $ecoji->decode($stream, STDOUT);
     }
 } catch (Exception $e) {
