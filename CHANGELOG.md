@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org).
 
 ## [Unreleased]
 
+No notable changes.
+
+## [1.1.0]
+
 ### Added
 
 * Added CLI program `/bin/ecoji`
@@ -20,5 +24,6 @@ This project adheres to [Semantic Versioning](http://semver.org).
 
 Initial release.
 
-[Unreleased]: https://github.com/Rayne/ecoji-php/compare/1.0.1...HEAD
+[Unreleased]: https://github.com/Rayne/ecoji-php/compare/1.1.0...HEAD
+[1.1.0]: https://github.com/Rayne/ecoji-php/compare/1.0.1...1.1.0
 [1.0.1]: https://github.com/Rayne/ecoji-php/compare/1.0.0...1.0.1
