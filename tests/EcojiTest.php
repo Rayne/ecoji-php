@@ -60,7 +60,8 @@ class EcojiTest extends TestCase
     /**
      * Newlines have to be skipped by the decoder.
      */
-    public function testDecodingWithNewlines() {
+    public function testDecodingWithNewlines()
+    {
         $this->assertSame('🍟', $this->ecoji->decode("\n🥴\n📉\n🤔\n🙋\n"));
     }
 
