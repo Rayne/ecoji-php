@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org).
 
 ### Added
 
+* Added CLI program `/bin/ecoji`
 * Added `Rayne\Ecoji\EcojiStream` for stream encoding and decoding
 
 ## [1.0.1] - 2018-03-14

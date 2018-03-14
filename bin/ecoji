@@ -1,0 +1,141 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * (c) Dennis Meckel
+ * For the full copyright and license information,
+ * please view the LICENSE file that was distributed with this source code.
+ */
+
+namespace Rayne\Ecoji\Cli;
+
+use Exception;
+use Rayne\Ecoji\EcojiStream;
+
+require_once dirname(__DIR__) . '/vendor/autoload.php';
+
+define('Rayne\Ecoji\Cli\ACTION_DECODE', 'DECODE');
+define('Rayne\Ecoji\Cli\ACTION_ENCODE', 'ENCODE');
+
+/**
+ * Prints help message.
+ */
+function command_help()
+{
+    fwrite(STDOUT, 'Usage: ecoji [OPTIONS]... [FILE]
+
+Encode or decode data as Unicode emojis. 😁
+
+Options:
+    -d, --decode          Decode data.
+    -w, --wrap COLS       Wrap encoded lines after COLS characters (default 76).
+                          Use 0 to disable line wrapping.
+    -h, --help            Print this message.
+    -v, --version         Print version information.
+');
+}
+
+/**
+ * Prints version.
+ */
+function command_version()
+{
+    $version = file_get_contents(dirname(__DIR__) . '/assets/version.txt');
+    fwrite(STDOUT, "$version\n");
+}
+
+array_shift($argv);
+
+$action = ACTION_ENCODE;
+$stream = STDIN;
+$wrap = 76;
+
+while ($argv) {
+    $arg = array_shift($argv);
+
+    if (in_array($arg, ['-d', '--decode'])) {
+        $action = ACTION_DECODE;
+        continue;
+    }
+
+    if (in_array($arg, ['-w', '--wrap'])) {
+        $arg = array_shift($argv);
+
+        if (!preg_match('#^0|[1-9][0-9]*$#', $arg)) {
+            fwrite(STDERR, sprintf("Invalid --wrap value: %s\n", $arg));
+            exit(1);
+        }
+
+        $wrap = (int)$arg;
+
+        continue;
+    }
+
+    if (in_array($arg, ['-h', '--help'])) {
+        command_help();
+        exit(0);
+    }
+
+    if (in_array($arg, ['-v', '--version'])) {
+        command_version();
+        exit(0);
+    }
+
+    // The last unknown argument should be [FILE].
+    if (count($argv) == 0) {
+        $file = $arg;
+
+        if (!is_file($file) || !is_readable($file)) {
+            fwrite(STDERR, sprintf("Unreadable file: %s\n", $file));
+            exit(1);
+        }
+
+        // TODO Could support all `fopen` compatible protocols instead of only files and unix sockets?
+        $stream = fopen($file, 'r');
+
+        break;
+    }
+
+    fwrite(STDERR, sprintf("Invalid argument: %s\n", $arg));
+    exit(1);
+}
+
+try {
+    // Ecoji tries to be as responsive as possible,
+    // which means that it will encode/decode and send characters as soon as possible.
+    // This is not wanted when writing on an interactive terminal.
+    // We are buffering the whole interactive input
+    // and will encode/decode on CTRL+D.
+    if (posix_isatty(STDIN)) {
+        $buffer = fopen('php://temp', 'rw');
+        stream_copy_to_stream($stream, $buffer);
+        rewind($buffer);
+
+        if (STDIN === $stream) {
+            @fclose($stream);
+        }
+
+        $stream = $buffer;
+    }
+
+    $ecoji = (new EcojiStream)
+        ->setWrap($wrap);
+
+    if ($action == ACTION_ENCODE) {
+        $ecoji->encode($stream, STDOUT);
+        fwrite(STDOUT, "\n");
+    } elseif ($action == ACTION_DECODE) {
+        $ecoji->decode($stream, STDOUT);
+    }
+} catch (Exception $e) {
+    if (STDIN === $stream) {
+        @fclose($stream);
+    }
+
+    fwrite(STDERR, $e->getMessage());
+    exit(1);
+}
+
+if (STDIN !== $stream) {
+    @fclose($stream);
+}

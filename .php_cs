@@ -2,6 +2,8 @@
 
 $finder = PhpCsFixer\Finder::create()
     ->in([
+        __DIR__ . '/assets',
+        __DIR__ . '/bin',
         __DIR__ . '/src',
         __DIR__ . '/tests',
     ]);
