@@ -113,7 +113,7 @@ class Ecoji
      */
     public function decode(string $input): string
     {
-        $textRemaining = $input;
+        $textRemaining = str_replace("\n", '', $input);
         $result = '';
 
         while (strlen($textRemaining)) {

@@ -58,6 +58,13 @@ class EcojiTest extends TestCase
     }
 
     /**
+     * Newlines have to be skipped by the decoder.
+     */
+    public function testDecodingWithNewlines() {
+        $this->assertSame('🍟', $this->ecoji->decode("\n🥴\n📉\n🤔\n🙋\n"));
+    }
+
+    /**
      * @return array
      */
     public function provideDecoding(): array
@@ -97,6 +104,9 @@ class EcojiTest extends TestCase
             ['→↑', $fourEmojisExpected],
             ['→↑←', $fourEmojisExpected],
             ['→↑←↓', 'Invalid rune: →'],
+
+            // Unicode garbage
+            [str_repeat(chr(255), 4), "Invalid rune: " . chr(255)],
         ];
     }
 
