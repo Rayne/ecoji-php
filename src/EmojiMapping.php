@@ -13,7 +13,7 @@ use InvalidArgumentException;
 use OutOfBoundsException;
 
 /**
- * Mapping implementation with the default emoji set defined by the "Ecoji/Encoji Standard".
+ * Mapping implementation with the default emoji set defined by the "Ecoji Standard".
  *
  * @see https://github.com/keith-turner/ecoji
  */

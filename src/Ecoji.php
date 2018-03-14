@@ -108,7 +108,7 @@ class Ecoji
     }
 
     /**
-     * @param string $input Ecoji/Encoji encoded information.
+     * @param string $input Ecoji encoded information.
      * @return string
      */
     public function decode(string $input): string

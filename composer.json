@@ -1,11 +1,11 @@
 {
   "name": "rayne/ecoji",
-  "description": "Encodes (and decodes) data as emojis. Implementation of the Encoji/Ecoji Standard.",
+  "description": "Encodes (and decodes) data as emojis. Implementation of the Ecoji Standard.",
   "keywords": [
+    "base1024",
     "ecoji",
     "emoji",
     "encoding",
-    "encoji",
     "decoding"
   ],
   "type": "library",
