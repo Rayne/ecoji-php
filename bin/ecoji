@@ -138,7 +138,7 @@ try {
         stream_copy_to_stream($stream, $buffer);
         rewind($buffer);
 
-        if (STDIN === $stream) {
+        if (STDIN !== $stream) {
             @fclose($stream);
         }
 
@@ -156,7 +156,7 @@ try {
         $ecoji->decode($stream, STDOUT);
     }
 } catch (Exception $e) {
-    if (STDIN === $stream) {
+    if (STDIN !== $stream) {
         @fclose($stream);
     }
 
