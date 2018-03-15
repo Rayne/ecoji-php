@@ -10,6 +10,7 @@
   ],
   "type": "library",
   "require-dev": {
+    "ext-json" : "*",
     "friendsofphp/php-cs-fixer": "^2.10",
     "phpunit/phpunit": "^6.0"
   },
@@ -21,7 +22,8 @@
   ],
   "require": {
     "php": "^7.0",
-    "ext-mbstring" : "*"
+    "ext-mbstring" : "*",
+    "ext-posix" : "*"
   },
   "autoload": {
     "psr-4": {
