@@ -43,3 +43,35 @@ $ecoji->decode('🏗📩🎦🐇🎛📘🔯🚜💞😽🆖🐊🎱🥁🚄🌱
 ```
 Base64 is so 1999, isn't there something better?
 ```
+
+## Docker
+
+Launch a temporary [Ecoji Docker container](https://hub.docker.com/r/rayne/ecoji) to utilize the CLI:
+
+```bash
+docker run -it --rm rayne/ecoji --help
+```
+
+Pipe data through a container:
+
+```bash
+echo -n "Ecoji for Docker" | docker run -i --rm rayne/ecoji
+🏣🔉🦐🔼🍉🔹🦒📲🏟🙁🎧🤒💙☕☕☕
+```
+
+Encode or decode a file by mounting it as volume
+or piping its content through a container:
+
+```bash
+docker run -it --rm -v /my/message:/file rayne/ecoji /file
+```
+
+```bash
+cat /my/message | docker run -i --rm rayne/ecoji
+```
+
+### Build Image
+
+```bash
+docker build -t rayne/ecoji:"$(cat assets/version.txt)" -t rayne/ecoji:latest .
+```

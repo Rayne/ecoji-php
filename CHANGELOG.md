@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org).
 
 ## [Unreleased]
 
-No notable changes.
+* Added `Dockerfile` of the official [Docker container](https://hub.docker.com/r/rayne/ecoji)
 
 ## [1.1.0]
 
