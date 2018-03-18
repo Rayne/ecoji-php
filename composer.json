@@ -22,8 +22,10 @@
   ],
   "require": {
     "php": "^7.0",
-    "ext-mbstring" : "*",
-    "ext-posix" : "*"
+    "ext-mbstring" : "*"
+  },
+  "suggest": {
+    "ext-posix" : "Needed by the CLI script /bin/ecoji"
   },
   "autoload": {
     "psr-4": {
