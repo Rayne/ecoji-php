@@ -118,6 +118,7 @@ while ($argv) {
         }
 
         // TODO Could support all `fopen` compatible protocols instead of only files and unix sockets?
+        //      Adding this feature could produce unexpected results, e.g. when trying to encode URLs.
         $stream = fopen($file, 'r');
 
         break;
