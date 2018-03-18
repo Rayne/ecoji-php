@@ -10,15 +10,22 @@ It's like `base1024` with an emoji character set.
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/rayne/ecoji-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/rayne/ecoji-php/?branch=master)
 [![License](https://poser.pugx.org/rayne/ecoji/license)](https://packagist.org/packages/rayne/ecoji)
 
+## Contents
+
+* [Installation](#installation)
+* [Encoding](#encoding)
+* [Decoding](#decoding)
+* [Streams](#streams)
+* [CLI](#cli)
+* [Docker](#docker)
+
 ## Installation
 
 ```bash
 composer require rayne/ecoji
 ```
 
-## Example
-
-### Encoding
+## Encoding
 
 ```php
 use Rayne\Ecoji\Ecoji;
@@ -31,7 +38,7 @@ $ecoji->encode("Base64 is so 1999, isn\'t there something better?\n");
 🏗📩🎦🐇🎛📘🔯🚜💞😽🆖🐊🎱🥁🚄🌱💞😭💮🇵💢🕥🐭🔸🍉🚲🦑🐶💢🕥🔮🔺🍉📸🐮🌼👦🚟🥴📑
 ```
 
-### Decoding
+## Decoding
 
 ```php
 use Rayne\Ecoji\Ecoji;
@@ -43,6 +50,49 @@ $ecoji->decode('🏗📩🎦🐇🎛📘🔯🚜💞😽🆖🐊🎱🥁🚄🌱
 ```
 Base64 is so 1999, isn't there something better?
 ```
+
+## Streams
+
+```php
+use Rayne\Ecoji\Ecoji;
+
+$ecoji = new EcojiStream;
+$ecoji->encode($sourceStream, $destinationStream);
+$ecoji->decode($sourceStream, $destinationStream);
+```
+
+`EcojiStream` doesn't wrap the encoded stream without configuring the wrap length first.
+A value of `0` disables wrapping.
+
+```php
+use Rayne\Ecoji\Ecoji;
+
+$ecoji = new EcojiStream;
+$ecoji->setWrap(80);
+```
+
+## CLI
+
+The CLI encodes and decodes files and streams.
+
+```bash
+./bin/ecoji --help
+```
+
+```
+Usage: ecoji [OPTIONS]... [FILE]
+
+Encode or decode data as Unicode emojis. 😁
+
+Options:
+    -d, --decode          Decode data.
+    -w, --wrap COLS       Wrap encoded lines after COLS characters (default 76).
+                          Use 0 to disable line wrapping.
+    -h, --help            Print this message.
+    -v, --version         Print version information.
+```
+
+Installing the Composer package `rayne/ecoji` will create a symlink, e.g. `vendor/bin/ecoji`.
 
 ## Docker
 
