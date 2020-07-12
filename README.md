@@ -1,7 +1,7 @@
 # Ecoji for PHP 🏣🔉🦐🔼🍉🔹🦒📲🐒🍍🀄☕
 
 Ecoji encodes data as 1024 emojis.
-It's like `base1024` with an emoji character set.
+It's like `base1024` with an emoji character set. Visit [ecoji.io](https://ecoji.io) to try Ecoji in your browser.
 
 > [`rayne/ecoji`](https://packagist.org/packages/rayne/ecoji) is a PHP port of [Ecoji](https://github.com/keith-turner/ecoji) with 100% test coverage.
 
