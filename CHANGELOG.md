@@ -10,6 +10,8 @@ This project adheres to [Semantic Versioning](http://semver.org).
 * Added support for PHP 7.3, PHP 7.4 and 8.0
 * Added Dockerfiles for PHP 7.2, 7.3, 7.4 and 8.0
 * The application's Docker image is now utilizing PHP 8.0
+* Added convenience scripts to build all container variants
+* Added convenience scripts to run unit tests in development containers
 
 ## [1.1.0]
 

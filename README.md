@@ -120,8 +120,17 @@ docker run -it --rm -v /my/message:/file rayne/ecoji /file
 cat /my/message | docker run -i --rm rayne/ecoji
 ```
 
-### Build Image
+### Docker Images
+
+The [`docker/README.md`](docker/README.md) explains how to build the application and all optional development images for all supported PHP versions.
+Additional convenience scripts run the unit tests with all supported PHP versions.
+
+## Tests
+
+The library registers the test runner as composer script.
 
 ```bash
-docker build -t rayne/ecoji:"$(cat assets/version.txt)" -t rayne/ecoji:latest .
+composer test
 ```
+
+All units tests can also be run in the development containers specified in the `docker` directory.

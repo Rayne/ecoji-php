@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+set -eux
+
+cd "$(dirname "$0")/../.."
+version="$(cat assets/version.txt)"
+
+build_app() {
+    echo "Build app version $version with PHP-8"
+
+    docker build \
+        -f docker/app/Dockerfile \
+        -t rayne/ecoji:"$version-app" \
+        -t rayne/ecoji:"$version" \
+        -t rayne/ecoji:latest \
+        .
+}
+
+build_dev_8_0() {
+    echo "Build development version $version with PHP-8.0"
+
+    docker build \
+        -f docker/dev-php-8.0/Dockerfile \
+        -t rayne/ecoji:"$version-dev-php-8.0" \
+        -t rayne/ecoji:"$version-dev-php-8" \
+        .
+}
+
+build_dev_7_4() {
+    echo "Build development version $version with PHP-7.4"
+
+    docker build \
+        -f docker/dev-php-7.4/Dockerfile \
+        -t rayne/ecoji:"$version-dev-php-7.4" \
+        -t rayne/ecoji:"$version-dev-php-7" \
+        .
+}
+
+build_dev_7_3() {
+    echo "Build development version $version with PHP-7.3"
+
+    docker build \
+        -f docker/dev-php-7.3/Dockerfile \
+        -t rayne/ecoji:"$version-dev-php-7.3" \
+        .
+}
+
+build_dev_7_2() {
+    echo "Build development version $version with PHP-7.2"
+
+    docker build \
+        -f docker/dev-php-7.3/Dockerfile \
+        -t rayne/ecoji:"$version-dev-php-7.2" \
+        .
+}
+
+build_app
+build_dev_8_0
+build_dev_7_4
+build_dev_7_3
+build_dev_7_2
+
+docker images | grep rayne/ecoji

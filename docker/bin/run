@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+set -eu
+
+TEST_USER=${TEST_USER:-1000}
+TEST_GROUP=${TEST_GROUP:-"$TEST_USER"}
+
+cd "$(dirname "$0")/../.."
+
+PROJECT_DIR="$(pwd)"
+
+version=$(cat assets/version.txt)
+
+if [[ "${1-}" == "" ]]; then
+    echo "Usage: $0 PHP_VERSION [ARGUMENTS]"
+    echo
+    echo "Available PHP versions:"
+    docker images | grep rayne/ecoji | grep dev
+    echo
+    echo "> $0 8.0 composer test"
+    echo
+    echo 'runs the unit tests in a PHP 8.0 environment.'
+    exit 1
+fi
+
+tag="$version-dev-php-$1"
+shift
+
+image="rayne/ecoji:$tag"
+
+docker run --rm -ti \
+    --user "$TEST_USER:$TEST_GROUP" \
+    --workdir /app \
+    -v "$PROJECT_DIR:/app:rw" \
+    "$image" "$@"

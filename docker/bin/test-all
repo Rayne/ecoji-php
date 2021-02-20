@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+#
+# This script updates the dependencies and runs the unit tests with multiple PHP versions.
+# Dependencies are installed and results are written to `/builds/$version-dev-php-$php_version`.
+# The script utilizes the Docker images built with `build-all`.
+# Run the build script first.
+# Otherwise updates and tests will fail.
+#
+
+set -eux
+
+TEST_USER=${TEST_USER:-1000}
+TEST_GROUP=${TEST_GROUP:-"$TEST_USER"}
+
+version=$(cat assets/version.txt)
+
+tags=(
+  "$version"-dev-php-8.0
+  "$version"-dev-php-7.4
+  "$version"-dev-php-7.3
+  "$version"-dev-php-7.2
+)
+
+cd "$(dirname "$0")/../.."
+[ -d build ] || mkdir build
+
+PROJECT_DIR="$(pwd)"
+
+execute_in_docker(){
+  local tag="$1"
+  local image="rayne/ecoji:$tag"
+  shift
+
+  local output_dir="$PROJECT_DIR/builds/$tag"
+
+  install -o "$TEST_USER" -g "$TEST_GROUP" -m 755 -d "$PROJECT_DIR/builds"
+  install -o "$TEST_USER" -g "$TEST_GROUP" -m 755 -d "$output_dir"
+
+  # Create output directories.
+  local build_dir="$output_dir"
+  local composer_dir="$output_dir/composer"
+  local report_dir="$output_dir/report"
+  local vendor_dir="$output_dir/vendor"
+
+  install -o "$TEST_USER" -g "$TEST_GROUP" -m 755 -d "$composer_dir"
+  install -o "$TEST_USER" -g "$TEST_GROUP" -m 755 -d "$report_dir"
+  install -o "$TEST_USER" -g "$TEST_GROUP" -m 755 -d "$vendor_dir"
+
+  # Create empty composer file if the file does not exist yet.
+  local composer_lock_file="$output_dir/composer.lock"
+
+  touch "$composer_lock_file"
+  chmod 775 "$composer_lock_file"
+  chown "$TEST_USER:$TEST_GROUP" "$composer_lock_file"
+
+  if ! docker run --rm -ti \
+         --user "$TEST_USER:$TEST_GROUP" \
+         --workdir /app \
+         -v "$PROJECT_DIR:/app:rw" \
+         -v "$build_dir:/app/build:rw" \
+         -v "$composer_dir:/home/user/.composer:rw" \
+         -v "$composer_lock_file:/app/composer.lock:rw" \
+         -v "$vendor_dir:/app/vendor:rw" \
+         "$image" "$@"; then
+    echo
+    echo "The test failed with image: $image"
+
+    exit $?
+  fi
+}
+
+for tag in "${tags[@]}"; do
+  execute_in_docker "$tag" composer update
+  execute_in_docker "$tag" composer test
+done
