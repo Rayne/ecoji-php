@@ -71,5 +71,10 @@ execute_in_docker(){
 
 for tag in "${tags[@]}"; do
   execute_in_docker "$tag" composer update
-  execute_in_docker "$tag" composer test
+
+  if [[ "$tag" =~ 7.2$ ]]; then
+    execute_in_docker "$tag" vendor/bin/phpunit -c phpunit-8.xml.dist
+  else
+    execute_in_docker "$tag" composer test
+  fi
 done
