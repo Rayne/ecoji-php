@@ -28,7 +28,7 @@ class EcojiStreamTest extends TestCase
     /**
      * @inheritdoc
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->source = fopen('php://temp', 'rw');
         $this->destination = fopen('php://temp', 'rw');
@@ -37,7 +37,7 @@ class EcojiStreamTest extends TestCase
     /**
      * @inheritdoc
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         fclose($this->source);
         fclose($this->destination);
@@ -93,11 +93,12 @@ class EcojiStreamTest extends TestCase
 
     /**
      * @dataProvider provideDecodingOfInvalidMessage
-     * @expectedException InvalidArgumentException
      * @param string $invalidMessage
      */
     public function testDecodingOfInvalidMessage(string $invalidMessage)
     {
+        $this->expectException(InvalidArgumentException::class);
+
         fwrite($this->source, $invalidMessage);
         rewind($this->source);
 
@@ -105,11 +106,13 @@ class EcojiStreamTest extends TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Invalid Ecoji encoding: 🍉
+     *
      */
     public function testDecodingOfIncompleteMessage()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid Ecoji encoding: 🍉');
+
         // Five UTF-8 characters but valid Ecoji encoded messages have a multiple of four characters.
         fwrite($this->source, '🏯🔩🚗🌷🍉');
         rewind($this->source);
@@ -118,11 +121,13 @@ class EcojiStreamTest extends TestCase
     }
 
     /**
-     * @expectedException OutOfBoundsException
-     * @expectedExceptionMessage -1
+     *
      */
     public function testInvalidWrap()
     {
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage('-1');
+
         (new EcojiStream)->setWrap(-1);
     }
 

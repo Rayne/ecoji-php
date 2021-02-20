@@ -6,6 +6,10 @@ This project adheres to [Semantic Versioning](http://semver.org).
 ## [Unreleased]
 
 * Added `Dockerfile` of the official [Docker container](https://hub.docker.com/r/rayne/ecoji)
+* Dropped official support for PHP 7.0 and 7.1
+* Added support for PHP 7.3, PHP 7.4 and 8.0
+* Added Dockerfiles for PHP 7.2, 7.3, 7.4 and 8.0
+* The application's Docker image is now utilizing PHP 8.0
 
 ## [1.1.0]
 

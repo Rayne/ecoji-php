@@ -11,8 +11,8 @@
   "type": "library",
   "require-dev": {
     "ext-json" : "*",
-    "friendsofphp/php-cs-fixer": "^2.10",
-    "phpunit/phpunit": "^6.0"
+    "friendsofphp/php-cs-fixer": "^2.18",
+    "phpunit/phpunit": "^8.5|^9.5"
   },
   "license": "MIT",
   "authors": [
@@ -21,7 +21,7 @@
     }
   ],
   "require": {
-    "php": "^7.0",
+    "php": "^7.2|^8.0",
     "ext-mbstring" : "*"
   },
   "suggest": {
