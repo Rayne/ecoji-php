@@ -1,27 +1,5 @@
 build:
     nodes:
-        php70:
-            environment:
-                php:
-                    version: '7.0'
-            tests:
-                override:
-                    -
-                        command: 'vendor/bin/phpunit --coverage-clover=coverage'
-                        coverage:
-                            file: 'coverage'
-                            format: 'php-clover'
-        php71:
-            environment:
-                php:
-                    version: '7.1'
-            tests:
-                override:
-                    -
-                        command: 'vendor/bin/phpunit --coverage-clover=coverage'
-                        coverage:
-                            file: 'coverage'
-                            format: 'php-clover'
         php72:
             environment:
                 php:
@@ -29,7 +7,40 @@ build:
             tests:
                 override:
                     -
+                        command: 'vendor/bin/phpunit -c phpunit-8.xml.dist --coverage-clover=coverage'
+                        coverage:
+                            file: 'coverage'
+                            format: 'php-clover'
+        php73:
+            environment:
+                php:
+                    version: '7.3'
+            tests:
+                override:
+                    -
                         command: 'vendor/bin/phpunit --coverage-clover=coverage'
+                        coverage:
+                            file: 'coverage'
+                            format: 'php-clover'
+        php74:
+            environment:
+                php:
+                    version: '7.4'
+            tests:
+                override:
+                    -
+                        command: 'vendor/bin/phpunit --coverage-clover=coverage'
+                        coverage:
+                            file: 'coverage'
+                            format: 'php-clover'
+        php80:
+            environment:
+                php:
+                    version: '8.0'
+            tests:
+                override:
+                    -
+                        command: 'php -dxdebug.mode=coverage vendor/bin/phpunit --coverage-clover=coverage'
                         coverage:
                             file: 'coverage'
                             format: 'php-clover'
