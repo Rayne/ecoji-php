@@ -98,7 +98,7 @@ class Ecoji
                     // use 4 bits from 3rd byte and 6 bits from 4th byte to lookup emoji
                     $output .= $this->mapping->getEmoji(($buffer[2] & 0x0f) << 6 | $buffer[3] >> 2);
 
-                    //user 2 bits from 4th byte and 8 bits from 5th byte to lookup emoji
+                    // use 2 bits from 4th byte and 8 bits from 5th byte to lookup emoji
                     $output .= $this->mapping->getEmoji(($buffer[3] & 0x03) << 8 | $buffer[4]);
                     break;
             }
