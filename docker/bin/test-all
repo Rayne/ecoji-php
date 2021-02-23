@@ -39,11 +39,9 @@ execute_in_docker(){
   # Create output directories.
   local build_dir="$output_dir"
   local composer_dir="$output_dir/composer"
-  local report_dir="$output_dir/report"
   local vendor_dir="$output_dir/vendor"
 
   install -o "$TEST_USER" -g "$TEST_GROUP" -m 755 -d "$composer_dir"
-  install -o "$TEST_USER" -g "$TEST_GROUP" -m 755 -d "$report_dir"
   install -o "$TEST_USER" -g "$TEST_GROUP" -m 755 -d "$vendor_dir"
 
   # Create empty composer file if the file does not exist yet.
