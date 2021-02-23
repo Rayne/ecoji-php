@@ -54,7 +54,7 @@ execute_in_docker(){
   if ! docker run --rm -ti \
          --user "$TEST_USER:$TEST_GROUP" \
          --workdir /app \
-         -v "$PROJECT_DIR:/app:rw" \
+         -v "$PROJECT_DIR:/app:ro" \
          -v "$build_dir:/app/build:rw" \
          -v "$composer_dir:/home/user/.composer:rw" \
          -v "$composer_lock_file:/app/composer.lock:rw" \
