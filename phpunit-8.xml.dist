@@ -6,6 +6,10 @@
         </whitelist>
     </filter>
 
+    <logging>
+        <log type="coverage-html" target="build/report"/>
+    </logging>
+
     <testsuites>
         <testsuite name="Rayne\Ecoji">
             <directory>tests</directory>
