@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * This file was automatically generated.
+ */
+
 return [
     '🀄',
     '🃏',

@@ -1,0 +1,87 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * (c) Dennis Meckel
+ * For the full copyright and license information,
+ * please view the LICENSE file that was distributed with this source code.
+ */
+
+namespace Rayne\Ecoji\Cli\Generator;
+
+use IntlChar;
+use RuntimeException;
+
+/**
+ * @param array $ecojiLUT An Ecoji look-up table.
+ * @return string The generated PHP source code of the native look-up table.
+ */
+function generate_php_lut_file_content(array $ecojiLUT): string
+{
+    $lut_php = generate_php_emoji_lut($ecojiLUT);
+
+    return <<<PHP
+        <?php
+
+        /**
+         * This file was automatically generated.
+         */
+
+        return $lut_php;
+
+        PHP;
+}
+
+/**
+ * @param string $codepointFile Ecoji file, e.g. `emojisV2.txt` of the Go implementation.
+ * @return array<int,string> A look-up table mapping the Ecoji ID to the corresponding Emoji.
+ */
+function generate_emoji_lut(string $codepointFile): array
+{
+    if (!is_file($codepointFile) || !is_readable($codepointFile)) {
+        throw new RuntimeException('Not able to read codepoint file: ' . $codepointFile);
+    }
+
+    $codepointText = file_get_contents($codepointFile);
+    $codepointTextLines = explode("\n", $codepointText);
+    $lut = [];
+
+    foreach ($codepointTextLines as $codepointTextLine) {
+        // Skip empty lines, e.g. on last line break.
+        if (!$codepointTextLine) {
+            continue;
+        }
+
+        // The hexadecimal codepoints are currently represented by strings.
+        // We are now converting them to base 10 for the emoji generation.
+        $decimalCodepoint = (int)base_convert($codepointTextLine, 16, 10);
+        $lut[] = IntlChar::chr(($decimalCodepoint));
+    }
+
+    return $lut;
+}
+
+/**
+ * Generates the source code of an emoji look-up table.
+ */
+function generate_php_emoji_lut(array $emojis): string
+{
+    $lut_php = "[\n";
+
+    foreach ($emojis as $emoji) {
+        $lut_php .= "    '$emoji',\n";
+    }
+
+    return $lut_php . "]";
+}
+
+$root = dirname(__DIR__);
+
+$ecoji_v1 = generate_emoji_lut($root . '/assets/upstream/emojisV1.txt');
+$ecoji_v2 = generate_emoji_lut($root . '/assets/upstream/emojisV2.txt');
+
+$ecoji_v1_code = generate_php_lut_file_content($ecoji_v1);
+$ecoji_v2_code = generate_php_lut_file_content($ecoji_v2);
+
+file_put_contents(dirname(__DIR__) . '/assets/emojis.v1.php', $ecoji_v1_code);
+file_put_contents(dirname(__DIR__) . '/assets/emojis.v2.php', $ecoji_v2_code);

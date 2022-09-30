@@ -59,7 +59,7 @@ class EmojiMapping implements EmojiMappingInterface
      */
     public function __construct()
     {
-        $this->emojis = require dirname(__DIR__) . '/assets/emojis.php';
+        $this->emojis = require dirname(__DIR__) . '/assets/emojis.v1.php';
 
         $this->revEmojis = array_flip($this->emojis);
         $this->revEmojis[$this->padding] = 0;
